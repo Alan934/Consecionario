@@ -241,21 +241,6 @@ public class Login extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        /*try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario", "root", "");
-            PersonaDAO personaDAO = new PersonaDAO(connection);
-            
-            if(personaDAO.iniciarSesion(txtDni.getText(), txtContrasena.getText()) == 1){
-                Administracion vAdministracion = new Administracion();
-                vAdministracion.setVisible(true);
-                //this.setVisible(false);
-            }else if(personaDAO.iniciarSesion(txtDni.getText(), txtContrasena.getText()) == 2){
-                
-            }
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped

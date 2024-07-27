@@ -1,9 +1,15 @@
 package model;
 
 public class Bicicleta extends Vehiculo{
-    
-    public Bicicleta(String marca, String color, String modelo, String patente, String cantidadPuertas, int rodado, double precio) {
-        super(marca, color, modelo, patente, cantidadPuertas, rodado, precio);
+    private String tipoBici;
+
+    public Bicicleta(String tipoBici, String marca, String color, String modelo, int rodado, double precio, String tipo) {
+        super(marca, color, modelo, rodado, precio, tipo);
+        this.tipoBici = tipoBici;
+    }
+
+    public String getTipoBici() {
+        return tipoBici;
     }
     
 }

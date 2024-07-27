@@ -1,9 +1,19 @@
 package model;
 
 public class Moto extends Vehiculo{
-    
-    public Moto(String marca, String color, String modelo, String patente, String cantidadPuertas, int rodado, double precio) {
-        super(marca, color, modelo, patente, cantidadPuertas, rodado, precio);
+    private String patente, tipoMoto;
+
+    public Moto(String patente, String tipoMoto , String marca, String color, String modelo, int rodado, double precio, String tipo) {
+        super(marca, color, modelo, rodado, precio, tipo);
+        this.patente = patente;
+        this.tipoMoto = tipoMoto;
+    }
+
+    public String getTipoMoto() {
+        return tipoMoto;
     }
     
+    public String getPatente() {
+        return patente;
+    }    
 }

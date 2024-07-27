@@ -16,7 +16,7 @@ public class PersonaDAO {
     public PersonaDAO(Connection connection) {
         this.connection = connection;
     }
-
+    //tipo: cliente o empleado
     public int insertarPersona(Persona persona, String tipo) throws SQLException {
         String query = "INSERT INTO Persona (nombre, apellido, dni, contrasena, tipo) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -39,7 +39,7 @@ public class PersonaDAO {
 
     public void insertarEmpleado(Empleado empleado) throws SQLException {
         int personaId = insertarPersona(empleado, "Empleado");
-        String query = "INSERT INTO Empleado (id, sueldo) VALUES (?, ?)";
+        String query = "INSERT INTO Empleado (idPersona, sueldo) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, personaId);
             stmt.setDouble(2, empleado.getSueldo());
@@ -49,7 +49,7 @@ public class PersonaDAO {
 
     public void insertarCliente(Cliente cliente) throws SQLException {
         int personaId = insertarPersona(cliente, "Cliente");
-        String query = "INSERT INTO Cliente (id) VALUES (?)";
+        String query = "INSERT INTO Cliente (idPersona) VALUES (?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, personaId);
             stmt.executeUpdate();
@@ -59,33 +59,7 @@ public class PersonaDAO {
             throw e;
         }
     }
-    
-    /*public int iniciarSesion(String dni, String contrasena) throws SQLException {
-        String query = "SELECT * FROM Persona WHERE dni = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, dni);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    String contrasenaAlmacenada = rs.getString("contrasena");
-                    if (contrasenaAlmacenada.equals(contrasena)) {
-                        String tipo = rs.getString("tipo");
-                        if ("Empleado".equals(tipo)) {
-                            return 1;
-                        } else if ("Cliente".equals(tipo)) {
-                            return 2;
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);
-                        return 0;
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "DNI no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return 0;
-                }
-            }
-        }
-        return 0;
-    }*/
+
     public Persona iniciarSesion(String dni, String contrasena) throws SQLException {
         String query = "SELECT * FROM Persona WHERE dni = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -100,11 +74,9 @@ public class PersonaDAO {
                         String dniPersona = rs.getString("dni");
 
                         if ("Empleado".equals(tipo)) {
-                            // Obtener datos adicionales de la tabla Empleado si es necesario
                             double sueldo = obtenerSueldo(rs.getInt("id"));
                             return new Empleado(nombre, apellido, dniPersona, sueldo, contrasena);
                         } else if ("Cliente".equals(tipo)) {
-                            // Obtener datos adicionales de la tabla Cliente si es necesario
                             return new Cliente(nombre, apellido, dniPersona, contrasena);
                         }
                     } else {
@@ -116,11 +88,10 @@ public class PersonaDAO {
             }
         }
         return null;
-    }
-    
+    }    
     
     private double obtenerSueldo(int personaId) throws SQLException {
-        String query = "SELECT sueldo FROM Empleado WHERE id = ?";
+        String query = "SELECT sueldo FROM Empleado WHERE idPersona = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, personaId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -132,5 +103,4 @@ public class PersonaDAO {
             }
         }
     }
-
 }

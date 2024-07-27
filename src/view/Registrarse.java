@@ -209,8 +209,8 @@ public class Registrarse extends javax.swing.JFrame {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario", "root", "");
             PersonaDAO personaDAO = new PersonaDAO(connection);
 
-            Empleado empleado = new Empleado("Juan", "Perez", "12345678", 50000, "123456");
-            personaDAO.insertarEmpleado(empleado);
+            /*Empleado empleado = new Empleado("Juan", "Perez", "12345678", 50000, "123456");
+            personaDAO.insertarEmpleado(empleado);*/
 
             Cliente cliente = new Cliente(txtNombre.getText(), txtApellido.getText(), txtDni.getText(), txtContrasena.getText());
             personaDAO.insertarCliente(cliente);
