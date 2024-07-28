@@ -24,7 +24,7 @@ public class CamionetaDAO {
         try(PreparedStatement stmt = connection.prepareStatement(query)){
             stmt.setInt(1, camionetaId);
             stmt.setString(2, camioneta.getPatente());
-            stmt.setString(3, camioneta.getCarga());
+            stmt.setDouble(3, camioneta.getCarga());
             stmt.executeUpdate();
         }catch (SQLException ex) {
             System.out.println("Insertar Camioneta: "+ex);
@@ -36,7 +36,7 @@ public class CamionetaDAO {
         String query = "UPDATE camioneta SET patente = ?, carga = ? WHERE idVehiculo = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, camioneta.getPatente());
-            stmt.setString(2, camioneta.getCarga());
+            stmt.setDouble(2, camioneta.getCarga());
             stmt.setInt(3, camioneta.getId());
             stmt.executeUpdate();
         }catch (SQLException ex) {

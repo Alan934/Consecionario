@@ -1,8 +1,8 @@
 package model;
 
 public class Vehiculo {
-    private String marca, color, modelo, tipo;
-    private int id, rodado;
+    private String marca, color, modelo, tipo, estado;
+    private int id, rodado, idCliente;
     private double precio;
     
     public Vehiculo(){
@@ -18,12 +18,28 @@ public class Vehiculo {
         this.tipo = tipo;
     }
 
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getEstado() {
+        return estado;
     }
 
     public void setMarca(String marca) {

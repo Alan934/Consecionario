@@ -61,7 +61,10 @@ public class PersonaDAO {
     }
 
     public Persona iniciarSesion(String dni, String contrasena) throws SQLException {
-        String query = "SELECT * FROM Persona WHERE dni = ?";
+            String query = "SELECT p.*, c.id AS cliente_id " +
+                   "FROM persona p " +
+                   "LEFT JOIN cliente c ON p.id = c.idPersona " +
+                   "WHERE p.dni = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, dni);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -77,7 +80,8 @@ public class PersonaDAO {
                             double sueldo = obtenerSueldo(rs.getInt("id"));
                             return new Empleado(nombre, apellido, dniPersona, sueldo, contrasena);
                         } else if ("Cliente".equals(tipo)) {
-                            return new Cliente(nombre, apellido, dniPersona, contrasena);
+                            int idCliente = rs.getInt("cliente_id");
+                            return new Cliente(idCliente, nombre, apellido, dniPersona, contrasena);
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);

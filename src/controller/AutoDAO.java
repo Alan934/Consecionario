@@ -24,7 +24,7 @@ public class AutoDAO {
         try(PreparedStatement stmt = connection.prepareStatement(query)){
             stmt.setInt(1, autoId);
             stmt.setString(2, auto.getPatente());
-            stmt.setString(3, auto.getCantidadPuertas());
+            stmt.setInt(3, auto.getCantidadPuertas());
             stmt.executeUpdate();
         }
     }
@@ -34,7 +34,7 @@ public class AutoDAO {
         String query = "UPDATE Auto SET patente = ?, cantidadPuertas = ? WHERE idVehiculo = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, auto.getPatente());
-            stmt.setString(2, auto.getCantidadPuertas());
+            stmt.setInt(2, auto.getCantidadPuertas());
             stmt.setInt(3, auto.getId());
             stmt.executeUpdate();
         }

@@ -21,19 +21,23 @@ import controller.AutoDAO;
 import controller.MotoDAO;
 import controller.CamionetaDAO;
 import controller.BicicletaDAO;
+import controller.VehiculoTablaController;
 
 public class Administracion extends javax.swing.JFrame {
     private Login vLogin;
     private Empleado empleado;
     private AgregarVehiculo vAgregarVehiculo;
+    private VehiculoTablaController vehiculoTablaController;
+
     
     public Administracion(Empleado empleado) {
         this.empleado = empleado;
+        this.vehiculoTablaController = new VehiculoTablaController();
         initComponents();        
         labelNombre.setText(empleado.getNombre());
         labelApellido.setText(empleado.getApellido());
-        //labelMostrarSueldo.setText(String.format("%.2f", empleado.getSueldo()));
-        
+        //labelMostrarSueldo.setText(String.format("%.2f", empleado.getSueldo()));  
+        listarVehiculos();
     }
 
     @SuppressWarnings("unchecked")
@@ -60,12 +64,14 @@ public class Administracion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(1, 37, 56));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        panelPrincipal.setBackground(new java.awt.Color(102, 102, 102));
+        panelPrincipal.setForeground(new java.awt.Color(255, 255, 255));
 
         labelAdministracion.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        labelAdministracion.setForeground(new java.awt.Color(255, 255, 255));
         labelAdministracion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelAdministracion.setText("ADMINISTRACION");
 
@@ -73,19 +79,18 @@ public class Administracion extends javax.swing.JFrame {
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(164, 164, 164))
+            .addComponent(labelAdministracion, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addComponent(labelAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(labelAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 4, Short.MAX_VALUE))
         );
 
-        jPanel1.add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 690, 70));
+        jPanel1.add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1000, 60));
+
+        panelBtn.setBackground(new java.awt.Color(1, 37, 62));
 
         btnSalir.setBackground(new java.awt.Color(255, 51, 51));
         btnSalir.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
@@ -99,6 +104,7 @@ public class Administracion extends javax.swing.JFrame {
             }
         });
 
+        btnAtras.setBackground(new java.awt.Color(251, 152, 51));
         btnAtras.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         btnAtras.setText("Atras");
         btnAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -113,33 +119,38 @@ public class Administracion extends javax.swing.JFrame {
         panelBtnLayout.setHorizontalGroup(
             panelBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBtnLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(133, 133, 133))
+                .addGap(18, 18, 18)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBtnLayout.setVerticalGroup(
             panelBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+            .addGroup(panelBtnLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24))
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(panelBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 670, 650, 130));
+        jPanel1.add(panelBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 680, 330, 60));
+
+        panelBienvenida.setBackground(new java.awt.Color(1, 44, 65));
 
         labelNombre.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        labelNombre.setForeground(new java.awt.Color(255, 255, 255));
         labelNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelNombre.setText("nombre");
 
         labelApellido.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        labelApellido.setForeground(new java.awt.Color(255, 255, 255));
         labelApellido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelApellido.setText("apellido");
 
         labelBienvenida.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        labelBienvenida.setForeground(new java.awt.Color(255, 255, 255));
         labelBienvenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelBienvenida.setText("Bienvenido");
 
@@ -163,7 +174,7 @@ public class Administracion extends javax.swing.JFrame {
             panelBienvenidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBienvenidaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBienvenidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelApellido)
@@ -178,43 +189,60 @@ public class Administracion extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "Marca", "Color", "Modelo", "Rodado", "Patente", "CantidadPuertas", "Precio", "Tipo", "carga", "tipoMoto", "tipoBici"
+                "id", "Marca", "Color", "Modelo", "Rodado", "Patente", "CantidadPuertas", "Precio", "Tipo", "Carga", "TipoMoto", "TipoBici", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tablaVehiculo);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 1000, 470));
 
+        jPanel2.setBackground(new java.awt.Color(1, 37, 62));
+
+        btnCrearVehiculo.setBackground(new java.awt.Color(204, 204, 204));
         btnCrearVehiculo.setText("Crear Vehiculo");
+        btnCrearVehiculo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCrearVehiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearVehiculoActionPerformed(evt);
             }
         });
 
+        btnListar.setBackground(new java.awt.Color(204, 204, 204));
         btnListar.setText("Listar");
+        btnListar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnListarActionPerformed(evt);
             }
         });
 
+        btnEliminar.setBackground(new java.awt.Color(204, 204, 204));
         btnEliminar.setText("Eliminar");
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
 
+        btnActualizar.setBackground(new java.awt.Color(204, 204, 204));
         btnActualizar.setText("Actualizar");
+        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
@@ -263,6 +291,11 @@ public class Administracion extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnAtrasActionPerformed
 
+    private void listarVehiculos() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
+        vehiculoTablaController.listarVehiculos(modelo, "Admin");
+    }
+        
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         if (JOptionPane.showConfirmDialog(this,"Esta seguro que desea salir?","A V I S O",2,1)==0){
             System.exit(0);
@@ -271,140 +304,26 @@ public class Administracion extends javax.swing.JFrame {
 
     private void btnCrearVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearVehiculoActionPerformed
         if(vAgregarVehiculo == null){
-            vAgregarVehiculo = new AgregarVehiculo();
+            vAgregarVehiculo = new AgregarVehiculo(empleado, this);
         }
         vAgregarVehiculo.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnCrearVehiculoActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
-        modelo.setRowCount(0); // Limpiar la tabla
-        Connection connection;
-        int cantidadColumnas = 9;
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario", "root", "");
-            VehiculoDAO vehiculoDAO = new VehiculoDAO(connection);
-            List<Vehiculo> vehiculos = vehiculoDAO.obtenerVehiculos();
-            for (Vehiculo vehiculo : vehiculos) {
-                Object[] row = new Object[cantidadColumnas];
-                row[0] = vehiculo.getId();
-                row[1] = vehiculo.getMarca();
-                row[2] = vehiculo.getColor();
-                row[3] = vehiculo.getModelo();
-                row[4] = vehiculo.getRodado();
-                row[5] = vehiculo instanceof Auto ? ((Auto) vehiculo).getPatente() : "-";
-                row[6] = vehiculo instanceof Auto ? ((Auto) vehiculo).getCantidadPuertas() : "-";
-                row[7] = vehiculo.getPrecio();
-                row[8] = vehiculo.getTipo();
-                modelo.addRow(row);
-            }
-                    
-        } catch (SQLException ex) {
-            Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        listarVehiculos();
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int selectedRow = tablaVehiculo.getSelectedRow();
-        if (selectedRow >= 0) {
-            int vehiculoId = (int) tablaVehiculo.getValueAt(selectedRow, 0);
-            String tipo = (String) tablaVehiculo.getValueAt(selectedRow, 8);
-
-            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario", "root", "")) {
-                VehiculoDAO vehiculoDAO = new VehiculoDAO(connection);
-
-                if ("Auto".equals(tipo)) {
-                    AutoDAO autoDAO = new AutoDAO(connection);
-                    autoDAO.eliminarAuto(vehiculoId);
-                } else if ("Moto".equals(tipo)) {
-                    MotoDAO motoDAO = new MotoDAO(connection);
-                    motoDAO.eliminarMoto(vehiculoId);
-                } else if ("Bicicleta".equals(tipo)) {
-                    BicicletaDAO bicicletaDAO = new BicicletaDAO(connection);
-                    bicicletaDAO.eliminarBicicleta(vehiculoId);
-                } else if ("Camioneta".equals(tipo)) {
-                    CamionetaDAO camionetaDAO = new CamionetaDAO(connection);
-                    camionetaDAO.eliminarCamioneta(vehiculoId);
-                }
-
-                // Luego elimina el registro de la tabla Vehiculo
-                vehiculoDAO.eliminarVehiculo(vehiculoId);
-
-                // Eliminar la fila de la tabla
-                DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
-                modelo.removeRow(selectedRow);
-
-                JOptionPane.showMessageDialog(this, "Vehículo eliminado correctamente.");
-            } catch (SQLException ex) {
-                Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Error al eliminar el vehículo.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona un vehículo para eliminar.");
-        }
+        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
+        vehiculoTablaController.eliminarVehiculo(modelo, selectedRow);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-    int selectedRow = tablaVehiculo.getSelectedRow();
-    if (selectedRow >= 0) {
-        int vehiculoId = (int) tablaVehiculo.getValueAt(selectedRow, 0);
-        String marca = (String) tablaVehiculo.getValueAt(selectedRow, 1);
-        String color = (String) tablaVehiculo.getValueAt(selectedRow, 2);
-        String modelo = (String) tablaVehiculo.getValueAt(selectedRow, 3);
-        int rodado = (int) tablaVehiculo.getValueAt(selectedRow, 4);
-        double precio = (double) tablaVehiculo.getValueAt(selectedRow, 7);
-        String tipo = (String) tablaVehiculo.getValueAt(selectedRow, 8);
-
-        Vehiculo vehiculo;
-        if ("Auto".equals(tipo)) {
-            String patente = (String) tablaVehiculo.getValueAt(selectedRow, 5);
-            String cantidadPuertas = (String) tablaVehiculo.getValueAt(selectedRow, 6);
-            vehiculo = new Auto(patente, cantidadPuertas, marca, color, modelo, rodado, precio, tipo);
-        } else if ("Moto".equals(tipo)) {
-            String patente = (String) tablaVehiculo.getValueAt(selectedRow, 5);
-            String tipoMoto = (String) tablaVehiculo.getValueAt(selectedRow, 6);
-            vehiculo = new Moto(patente, tipoMoto, marca, color, modelo, rodado, precio, tipo);
-        } else if ("Bicicleta".equals(tipo)) {
-            String tipoBici = (String) tablaVehiculo.getValueAt(selectedRow, 5);
-            vehiculo = new Bicicleta(tipoBici, marca, color, modelo, rodado, precio, tipo);
-        } else if ("Camioneta".equals(tipo)) {
-            String patente = (String) tablaVehiculo.getValueAt(selectedRow, 5);
-            String carga = (String) tablaVehiculo.getValueAt(selectedRow, 6);
-            vehiculo = new Camioneta(patente, carga, marca, color, modelo, rodado, precio, tipo);
-        } else {
-            vehiculo = new Vehiculo(marca, color, modelo, rodado, precio, tipo);
-        }
-        vehiculo.setId(vehiculoId);
-
-        Connection connection;
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario", "root", "");
-            if (vehiculo instanceof Auto) {
-                AutoDAO autoDAO = new AutoDAO(connection);
-                autoDAO.actualizarAuto((Auto) vehiculo);
-            } else if (vehiculo instanceof Moto) {
-                MotoDAO motoDAO = new MotoDAO(connection);
-                motoDAO.actualizarMoto((Moto) vehiculo);
-            } else if (vehiculo instanceof Bicicleta) {
-                BicicletaDAO biciDAO = new BicicletaDAO(connection);
-                biciDAO.actualizarBicicleta((Bicicleta) vehiculo);
-            } else if (vehiculo instanceof Camioneta) {
-                CamionetaDAO camionetaDAO = new CamionetaDAO(connection);
-                camionetaDAO.actualizarCamioneta((Camioneta) vehiculo);
-            } else {
-                VehiculoDAO vehiculoDAO = new VehiculoDAO(connection);
-                vehiculoDAO.actualizarVehiculo(vehiculo);
-            }
-            JOptionPane.showMessageDialog(this, "Vehículo actualizado correctamente.");
-        } catch (SQLException ex) {
-            Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error al actualizar el vehículo.");
-        }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona un vehículo para actualizar.");
-        }
+        int selectedRow = tablaVehiculo.getSelectedRow();
+        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
+        vehiculoTablaController.actualizarVehiculo(modelo, selectedRow);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     public static void main(String args[]) {

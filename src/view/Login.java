@@ -8,10 +8,14 @@ import javax.swing.JOptionPane;
 import model.Cliente;
 import model.Empleado;
 import model.Persona;
+import controller.bdConexion;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Login extends javax.swing.JFrame {
     private Registrarse vRegistrarse;
-    private Vehiculo vVehiculo;
+    private ClienteView vVehiculo;
+    private Connection connection;
     
     public Login() {
         initComponents();
@@ -205,10 +209,11 @@ public class Login extends javax.swing.JFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         if (JOptionPane.showConfirmDialog(this,"Esta seguro que desea salir?","A V I S O",2,1)==0){
+            cerrarConexion();
             System.exit(0);
         }
     }//GEN-LAST:event_btnSalirActionPerformed
-    
+       
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         if(vRegistrarse == null){
             vRegistrarse = new Registrarse();
@@ -231,13 +236,12 @@ public class Login extends javax.swing.JFrame {
                     this.setVisible(false);
                 } else if (persona instanceof Cliente) {
                     Cliente cliente = (Cliente) persona;
-                    Vehiculo vVehiculo = new Vehiculo(cliente);
+                    ClienteView vVehiculo = new ClienteView(cliente,connection);
                     vVehiculo.setVisible(true);
                     this.setVisible(false);
                 }
             }
 
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -261,6 +265,16 @@ public class Login extends javax.swing.JFrame {
         txtContrasena.setText("");
     }//GEN-LAST:event_txtContrasenaFocusGained
 
+    private void cerrarConexion() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
