@@ -39,16 +39,20 @@ public class Registrarse extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        background.setBackground(new java.awt.Color(153, 153, 0));
+        background.setBackground(new java.awt.Color(1, 37, 56));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelTitulo.setBackground(new java.awt.Color(255, 255, 255));
         labelTitulo.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Registrar Usuario");
         labelTitulo.setToolTipText("");
         background.add(labelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 400, 70));
 
+        panelBtn.setBackground(new java.awt.Color(1, 44, 65));
+
+        btnAceptar.setBackground(new java.awt.Color(252, 200, 73));
         btnAceptar.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -58,6 +62,7 @@ public class Registrarse extends javax.swing.JFrame {
             }
         });
 
+        btnAtras.setBackground(new java.awt.Color(251, 152, 51));
         btnAtras.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         btnAtras.setText("Atras");
         btnAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -90,9 +95,13 @@ public class Registrarse extends javax.swing.JFrame {
 
         background.add(panelBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 510, 400, 140));
 
+        jPanel1.setBackground(new java.awt.Color(1, 44, 65));
+
         labelNombre.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        labelNombre.setForeground(new java.awt.Color(255, 255, 255));
         labelNombre.setText("Nombre");
 
+        txtNombre.setBackground(new java.awt.Color(204, 204, 204));
         txtNombre.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtNombre.setText("Nombre");
         txtNombre.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -107,8 +116,10 @@ public class Registrarse extends javax.swing.JFrame {
         });
 
         labelApellido.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        labelApellido.setForeground(new java.awt.Color(255, 255, 255));
         labelApellido.setText("Apellido");
 
+        txtApellido.setBackground(new java.awt.Color(204, 204, 204));
         txtApellido.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtApellido.setText("Apellido");
         txtApellido.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -123,8 +134,10 @@ public class Registrarse extends javax.swing.JFrame {
         });
 
         labelDni.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        labelDni.setForeground(new java.awt.Color(255, 255, 255));
         labelDni.setText("DNI");
 
+        txtDni.setBackground(new java.awt.Color(204, 204, 204));
         txtDni.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtDni.setText("DNI");
         txtDni.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -139,8 +152,10 @@ public class Registrarse extends javax.swing.JFrame {
         });
 
         labelContrasena.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        labelContrasena.setForeground(new java.awt.Color(255, 255, 255));
         labelContrasena.setText("Contraseña");
 
+        txtContrasena.setBackground(new java.awt.Color(204, 204, 204));
         txtContrasena.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtContrasena.setText("Contraseña");
         txtContrasena.addFocusListener(new java.awt.event.FocusAdapter() {

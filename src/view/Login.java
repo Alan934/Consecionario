@@ -44,15 +44,19 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        background.setBackground(new java.awt.Color(153, 153, 0));
+        background.setBackground(new java.awt.Color(1, 37, 56));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelLogin.setBackground(new java.awt.Color(204, 204, 0));
+        panelLogin.setBackground(new java.awt.Color(1, 44, 65));
 
         labelTitulo.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Inicio de Sesion");
 
+        panelDatos.setBackground(new java.awt.Color(1, 44, 65));
+
+        txtContrasena.setBackground(new java.awt.Color(204, 204, 204));
         txtContrasena.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtContrasena.setText("Ingrese Contraseña");
         txtContrasena.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -67,8 +71,10 @@ public class Login extends javax.swing.JFrame {
         });
 
         labelDni.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        labelDni.setForeground(new java.awt.Color(255, 255, 255));
         labelDni.setText("DNI");
 
+        txtDni.setBackground(new java.awt.Color(204, 204, 204));
         txtDni.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtDni.setText("Ingrese DNI");
         txtDni.setBorder(null);
@@ -84,6 +90,7 @@ public class Login extends javax.swing.JFrame {
         });
 
         labelContrasena.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        labelContrasena.setForeground(new java.awt.Color(255, 255, 255));
         labelContrasena.setText("Contraseña");
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
@@ -114,6 +121,9 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        panelBtn.setBackground(new java.awt.Color(1, 44, 65));
+
+        btnIngresar.setBackground(new java.awt.Color(252, 200, 73));
         btnIngresar.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         btnIngresar.setText("Ingresar");
         btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -123,6 +133,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        btnRegistrar.setBackground(new java.awt.Color(251, 152, 51));
         btnRegistrar.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         btnRegistrar.setText("Registrar");
         btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -187,7 +198,7 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(panelLoginLayout.createSequentialGroup()
                         .addGap(168, 168, 168)
                         .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         panelLoginLayout.setVerticalGroup(
             panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,10 +208,10 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
                 .addComponent(panelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
-        background.add(panelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 640, 660));
+        background.add(panelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 640, 660));
 
         getContentPane().add(background, java.awt.BorderLayout.CENTER);
 

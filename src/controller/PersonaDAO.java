@@ -16,7 +16,8 @@ public class PersonaDAO {
     public PersonaDAO(Connection connection) {
         this.connection = connection;
     }
-    //tipo: cliente o empleado
+    
+    // Inserta una nueva persona en la base de datos y retorna el ID generado. tipo: cliente o empleado
     public int insertarPersona(Persona persona, String tipo) throws SQLException {
         String query = "INSERT INTO Persona (nombre, apellido, dni, contrasena, tipo) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -26,7 +27,8 @@ public class PersonaDAO {
             stmt.setString(4, persona.getContrasena());
             stmt.setString(5, tipo);
             stmt.executeUpdate();
-
+            
+            // Obtiene la clave generada para la nueva persona
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt(1);
@@ -36,7 +38,8 @@ public class PersonaDAO {
             }
         }
     }
-
+    
+    // Inserta un nuevo empleado en la base de datos
     public void insertarEmpleado(Empleado empleado) throws SQLException {
         int personaId = insertarPersona(empleado, "Empleado");
         String query = "INSERT INTO Empleado (idPersona, sueldo) VALUES (?, ?)";
@@ -44,9 +47,13 @@ public class PersonaDAO {
             stmt.setInt(1, personaId);
             stmt.setDouble(2, empleado.getSueldo());
             stmt.executeUpdate();
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al crear el empleado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            throw e;
         }
     }
 
+    // Inserta un nuevo cliente en la base de datos
     public void insertarCliente(Cliente cliente) throws SQLException {
         int personaId = insertarPersona(cliente, "Cliente");
         String query = "INSERT INTO Cliente (idPersona) VALUES (?)";
@@ -60,6 +67,7 @@ public class PersonaDAO {
         }
     }
 
+    // Inicia sesión para una persona con el DNI y contraseña proporcionados
     public Persona iniciarSesion(String dni, String contrasena) throws SQLException {
             String query = "SELECT p.*, c.id AS cliente_id " +
                    "FROM persona p " +
@@ -70,12 +78,13 @@ public class PersonaDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     String contrasenaAlmacenada = rs.getString("contrasena");
+                    // Verifica si la contraseña es correcta
                     if (contrasenaAlmacenada.equals(contrasena)) {
                         String tipo = rs.getString("tipo");
                         String nombre = rs.getString("nombre");
                         String apellido = rs.getString("apellido");
                         String dniPersona = rs.getString("dni");
-
+                        // Crea el objeto correspondiente según el tipo de persona
                         if ("Empleado".equals(tipo)) {
                             double sueldo = obtenerSueldo(rs.getInt("id"));
                             return new Empleado(nombre, apellido, dniPersona, sueldo, contrasena);
@@ -94,6 +103,7 @@ public class PersonaDAO {
         return null;
     }    
     
+    // Obtiene el sueldo de un empleado por su ID de persona
     private double obtenerSueldo(int personaId) throws SQLException {
         String query = "SELECT sueldo FROM Empleado WHERE idPersona = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {

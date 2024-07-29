@@ -27,6 +27,8 @@ public class VehiculoTablaController {
     public VehiculoTablaController(Connection connection) {
         this.vehiculoDAO = new VehiculoDAO(connection); // Asegúrate de que el constructor de VehiculoDAO esté bien definido
     }
+
+    // Lista los vehículos en un modelo de tabla
     public void listarVehiculos(DefaultTableModel modelo, String persona) {
         modelo.setRowCount(0); // Limpiar la tabla
         Connection connection;
@@ -39,7 +41,8 @@ public class VehiculoTablaController {
                 if (persona.equals("Cliente") && !vehiculo.getEstado().equalsIgnoreCase("Disponible")) {
                     continue; // Si es un cliente y el vehículo no está disponible, se omite
                 }
-
+                
+                // Crear una fila con los datos del vehículo
                 Object[] row = new Object[cantidadColumnas];
                 row[0] = vehiculo.getId();
                 row[1] = vehiculo.getMarca();
@@ -66,6 +69,7 @@ public class VehiculoTablaController {
         }
     }
     
+    // Agregar un nuevo vehículo
     public void agregarVehiculo(String tipo, String marca, String color, String modeloVehiculo, int rodado, double precio, String patente, int cantidadPuertas, String tipoMoto, String tipoBici, double carga) {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario", "root", "");
@@ -73,7 +77,8 @@ public class VehiculoTablaController {
             MotoDAO motoDAO = new MotoDAO(connection);
             BicicletaDAO biciDAO = new BicicletaDAO(connection);
             CamionetaDAO camionetaDAO = new CamionetaDAO(connection);
-
+            
+            // Crear e insertar el vehículo según su tipo
             switch(tipo){
                 case "Auto":
                     Auto auto = new Auto(patente, cantidadPuertas, marca, color, modeloVehiculo, rodado, precio, tipo);
@@ -99,14 +104,16 @@ public class VehiculoTablaController {
         }
     }
     
+    // Elimina un vehículo seleccionado en la tabla
     public void eliminarVehiculo(DefaultTableModel modelo, int selectedRow) {
         if (selectedRow >= 0) {
-            int vehiculoId = (int) modelo.getValueAt(selectedRow, 0);
-            String tipo = (String) modelo.getValueAt(selectedRow, 8);
+            int vehiculoId = (int) modelo.getValueAt(selectedRow, 0); // Obtener el ID del vehículo seleccionado
+            String tipo = (String) modelo.getValueAt(selectedRow, 8); // Obtener el tipo del vehículo
 
             try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario", "root", "")) {
                 VehiculoDAO vehiculoDAO = new VehiculoDAO(connection);
-
+                
+                // Eliminar el vehículo según su tipo
                 if ("Auto".equals(tipo)) {
                     AutoDAO autoDAO = new AutoDAO(connection);
                     autoDAO.eliminarAuto(vehiculoId);
@@ -121,7 +128,7 @@ public class VehiculoTablaController {
                     camionetaDAO.eliminarCamioneta(vehiculoId);
                 }
 
-                // Luego elimina el registro de la tabla Vehiculo
+                // Elimina el registro de la tabla Vehiculo
                 vehiculoDAO.eliminarVehiculo(vehiculoId);
 
                 // Eliminar la fila de la tabla
@@ -137,6 +144,7 @@ public class VehiculoTablaController {
         }
     }
     
+    // Actualiza un vehículo seleccionado en la tabla
     public void actualizarVehiculo(DefaultTableModel modelo, int selectedRow) {
         if (selectedRow >= 0) {
             try {
@@ -149,7 +157,8 @@ public class VehiculoTablaController {
                 double precio = Double.parseDouble(modelo.getValueAt(selectedRow, 7).toString());
                 String tipo = (String) modelo.getValueAt(selectedRow, 8);
                 String estado = (String) modelo.getValueAt(selectedRow, 12);
-
+                
+                // Crear una instancia del vehículo según su tipo
                 Vehiculo vehiculo;
                 if ("Auto".equals(tipo)) {
                     String patente = (String) modelo.getValueAt(selectedRow, 5);
@@ -175,7 +184,8 @@ public class VehiculoTablaController {
                 // Conectar a la base de datos y actualizar el vehículo
                 try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario", "root", "")) {
                     VehiculoDAO vehiculoDAO = new VehiculoDAO(connection);
-
+                    
+                    // Actualizar el vehículo según su tipo
                     if (vehiculo instanceof Auto) {
                         AutoDAO autoDAO = new AutoDAO(connection);
                         autoDAO.actualizarAuto((Auto) vehiculo);
@@ -205,24 +215,29 @@ public class VehiculoTablaController {
             JOptionPane.showMessageDialog(null, "Por favor, selecciona un vehículo para actualizar.");
         }
     }
+    
+    // Habilita campos en la interfaz según el tipo de vehículo seleccionado
     public void habilitarCampos(String tipo, javax.swing.JTextField txtMarca, javax.swing.JTextField txtColor, 
                                 javax.swing.JTextField txtModelo, javax.swing.JTextField txtRodado, 
                                 javax.swing.JTextField txtPrecio, javax.swing.JTextField txtPatente, 
                                 javax.swing.JTextField txtCantidadPuertas, javax.swing.JTextField txtCarga, 
                                 javax.swing.JTextField txtTipoMoto, javax.swing.JTextField txtTipoBici) {
+        // Definir qué campos deben habilitarse según el tipo de vehículo
         boolean habilitarMarcaColorModeloRodadoPrecio = true;
         boolean habilitarPatente = tipo.equals("Auto") || tipo.equals("Camioneta") || tipo.equals("Moto");
         boolean habilitarCantidadPuertas = tipo.equals("Auto");
         boolean habilitarCarga = tipo.equals("Camioneta");
         boolean habilitarTipoMoto = tipo.equals("Moto");
         boolean habilitarTipoBici = tipo.equals("Bicicleta");
-
+        
+        // Habilitar o deshabilitar los campos
         txtMarca.setEnabled(habilitarMarcaColorModeloRodadoPrecio);
         txtColor.setEnabled(habilitarMarcaColorModeloRodadoPrecio);
         txtModelo.setEnabled(habilitarMarcaColorModeloRodadoPrecio);
         txtRodado.setEnabled(habilitarMarcaColorModeloRodadoPrecio);
         txtPrecio.setEnabled(habilitarMarcaColorModeloRodadoPrecio);
 
+        // Limpiar los campos deshabilitados
         txtPatente.setEnabled(habilitarPatente);
         txtCantidadPuertas.setEnabled(habilitarCantidadPuertas);
         txtCarga.setEnabled(habilitarCarga);
@@ -236,24 +251,7 @@ public class VehiculoTablaController {
         if (!habilitarTipoBici) txtTipoBici.setText("");
     }
     
-    /*public boolean comprarVehiculo(int idVehiculo, int idCliente) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario", "root", "")) {
-            VehiculoDAO vehiculoDAO = new VehiculoDAO(connection);
-
-            // Vender el vehículo y asignarlo al cliente
-            vehiculoDAO.venderVehiculo(idVehiculo, idCliente);
-
-            System.out.println("Vehículo con ID " + idVehiculo + " vendido y asignado al cliente con ID " +idCliente);
-
-            // Aquí podrías agregar lógica adicional, como actualizar el inventario, etc.
-            // Por ahora, simplemente retornamos true para indicar que la compra fue exitosa.
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error al vender el vehículo: " + e.getMessage());
-        }
-        return false;
-    }*/
+    // Registra la compra de un vehículo por un cliente
     public boolean comprarVehiculo(int idVehiculo, int idCliente) {
         return vehiculoDAO.venderVehiculo(idVehiculo, idCliente);
     }

@@ -129,6 +129,7 @@ public class ClienteView extends javax.swing.JFrame {
             }
         });
 
+        btnComprar.setBackground(new java.awt.Color(204, 204, 204));
         btnComprar.setText("Comprar");
         btnComprar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

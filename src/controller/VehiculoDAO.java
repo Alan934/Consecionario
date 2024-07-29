@@ -26,6 +26,7 @@ public class VehiculoDAO {
         this.connection = connection;
     }
     
+    // Inserta un nuevo vehículo en la base de dato
     public int insertarVehiculo(Vehiculo vehiculo, String tipo) throws SQLException{
         String query = "INSERT INTO Vehiculo (marca, color, modelo, rodado, precio, tipo) VALUES (?, ?, ?, ?, ?, ?)";
         try(PreparedStatement stmt = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
@@ -36,7 +37,7 @@ public class VehiculoDAO {
             stmt.setDouble(5, vehiculo.getPrecio());
             stmt.setString(6, vehiculo.getTipo());
             stmt.executeUpdate();
-            
+             // clave para el nuevo vehículo
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()){
                 if(generatedKeys.next()){
                     return generatedKeys.getInt(1);
@@ -47,6 +48,7 @@ public class VehiculoDAO {
         }
     }
     
+    // Obtiene todos los vehículos de la base de datos, incluyendo detalles específicos de cada tipo
     public List<Vehiculo> obtenerVehiculos() throws SQLException {
         String query = "SELECT v.*, a.patente AS auto_patente, a.cantidadPuertas, " +
                        "m.patente AS moto_patente, m.tipoMoto, " +
@@ -65,6 +67,7 @@ public class VehiculoDAO {
                 Vehiculo vehiculo;
                 String tipo = rs.getString("tipo");
 
+                // Crea el objeto Vehiculo según el tipo
                 switch (tipo) {
                     case "Auto":
                         vehiculo = new Auto(
@@ -131,6 +134,7 @@ public class VehiculoDAO {
         return vehiculos;
     }
     
+    // Elimina un vehículo de la base de datos según su ID
     public void eliminarVehiculo(int vehiculoId) throws SQLException {
         String query = "DELETE FROM vehiculo WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -139,6 +143,7 @@ public class VehiculoDAO {
         }
     }
     
+    // Actualiza los datos de un vehículo en la base de datos
     public void actualizarVehiculo(Vehiculo vehiculo) throws SQLException {
         String query = "UPDATE vehiculo SET marca = ?, color = ?, modelo = ?, rodado = ?, precio = ?, tipo = ?, estado = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -154,6 +159,7 @@ public class VehiculoDAO {
         }
     }
     
+    // Obtiene un vehículo por su ID
     public Vehiculo obtenerVehiculoPorId(int idVehiculo) {
         Vehiculo vehiculo = null;
         String query = "SELECT * FROM vehiculo WHERE id = ?";
@@ -189,6 +195,7 @@ public class VehiculoDAO {
         return vehiculo;
     }
 
+    // Obtiene los datos de un auto específico por su ID
     private Auto obtenerAutoPorId(int idVehiculo, String marca, String color, String modelo, int rodado, double precio) throws SQLException {
         Auto auto = null;
         String query = "SELECT * FROM auto WHERE idVehiculo = ?";
@@ -206,6 +213,7 @@ public class VehiculoDAO {
         return auto;
     }
 
+    // Obtiene los datos de una moto específica por su ID
     private Moto obtenerMotoPorId(int idVehiculo, String marca, String color, String modelo, int rodado, double precio) throws SQLException {
         Moto moto = null;
         String query = "SELECT * FROM moto WHERE idVehiculo = ?";
@@ -223,6 +231,7 @@ public class VehiculoDAO {
         return moto;
     }
 
+    // Obtiene los datos de una bicicleta específica por su ID
     private Bicicleta obtenerBicicletaPorId(int idVehiculo, String marca, String color, String modelo, int rodado, double precio) throws SQLException {
         Bicicleta bicicleta = null;
         String query = "SELECT * FROM bicicleta WHERE idVehiculo = ?";
@@ -239,6 +248,7 @@ public class VehiculoDAO {
         return bicicleta;
     }
 
+    // Obtiene los datos de una camioneta específica por su ID
     private Camioneta obtenerCamionetaPorId(int idVehiculo, String marca, String color, String modelo, int rodado, double precio) throws SQLException {
         Camioneta camioneta = null;
         String query = "SELECT * FROM camioneta WHERE idVehiculo = ?";
@@ -256,25 +266,7 @@ public class VehiculoDAO {
         return camioneta;
     }
     
-    /*public void venderVehiculo(int idVehiculo, int idCliente) throws SQLException {
-        String updateVehiculoQuery = "UPDATE vehiculo SET estado = 'Vendido' WHERE id = ?";
-        String updateClienteQuery = "UPDATE cliente SET idVehiculo = ? WHERE id = ?";
-
-        try (PreparedStatement vehiculoStmt = connection.prepareStatement(updateVehiculoQuery);
-             PreparedStatement clienteStmt = connection.prepareStatement(updateClienteQuery)) {
-
-            // Actualizar el estado del vehículo
-            vehiculoStmt.setInt(1, idVehiculo);
-            int vehiculoRowsUpdated = vehiculoStmt.executeUpdate();
-            System.out.println("Filas actualizadas en la tabla 'vehiculo': " + vehiculoRowsUpdated);
-
-            // Asignar el ID del vehículo al cliente
-            clienteStmt.setInt(1, idVehiculo);
-            clienteStmt.setInt(2, idCliente);
-            int clienteRowsUpdated = clienteStmt.executeUpdate();
-            System.out.println("Filas actualizadas en la tabla 'cliente': " + clienteRowsUpdated);
-        }
-    }*/
+    // Marca un vehículo como vendido, asignándolo a un cliente
     public boolean venderVehiculo(int idVehiculo, int idCliente) {
         String query = "UPDATE vehiculo SET estado = 'Vendido', idCliente = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
